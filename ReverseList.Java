@@ -112,6 +112,48 @@ public class Solution1 {
 }
 
 
+ /**
+     *
+     * 利用两个指针的方式来实现，一个保存前节点，一个保存后节点，不断的循环来实现这个逻辑，空间复杂度O(1),实现复杂福O(n)
+     * @param head
+     * @return
+     */
+ public static ListNode reverseBetween(ListNode head,int m,int n) {
+        if(head==null||head.next==null||m==n){
+            return  head;
+        }
+        int i=1;
+        ListNode current=head;
+        ListNode prev=null;
+        //定位到要翻转的头节点及前一个头节点
+        while (current != null&&i<m){
+            prev=current;
+            current=current.next;
+            i++;
+        }
+        //保证获取前段的尾部
+        ListNode connection=prev;
+        //指向第m个节点
+        ListNode tail = current;
+        ListNode temp=null;
+        while (current!=null&&i<=n){
+            i++;
+            temp=current.next;
+            current.next=prev;
+            prev=current;
+            current=temp;
+        }
+
+        if (connection != null) {
+            connection.next = prev; // connection 是第 m 个节点的前一个节点
+        } else {
+            head = prev; // 如果 m 为 1，prev 就是新的头节点
+        }
+//        tail.next = current; // tail 是第 n 个节点
+
+        return head;
+    }
+
 
 
 
