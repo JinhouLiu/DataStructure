@@ -4,24 +4,24 @@ public class BinaryToDecimal {
 
     public static void main(String[] args){
 
-      String s="0101";
-      System.out.println(binaryToDecimal(s));
+      String s="1101";
+      System.out.println(binary(s));
 
     }
 
-    public static int Binary(String bianryStr){
-        if(bianryStr==null||bianryStr.length()==0){
+    public static int binary(String binaryStr){
+        if(binaryStr==null||binaryStr.length()==0){
             return  0;
         }
         //获取标志位
-          boolean positiveSign=bianryStr.charAt(0)=='1';
+        boolean isNegative = binaryStr.charAt(0) == '1';
           int result=0;
-          if(positiveSign){
-              String  inverseCodeStr=toInverseCode(bianryStr);
-              String   complateCode=toComplateCode(inverseCodeStr);
+          if(isNegative){
+              String  inverseCodeStr=toInverseCode(binaryStr);
+              String   complateCode=toComplementCode(inverseCodeStr);
                result=-binaryToDecimal(complateCode);
           }else{
-              binaryToDecimal(bianryStr);
+            result=binaryToDecimal(binaryStr);
           }
           return result;
     }
@@ -69,22 +69,22 @@ public class BinaryToDecimal {
      * @param binaryStr
      * @return
      */
-    public static String toComplateCode(String binaryStr) {
+    public static String toComplementCode(String binaryStr) {
 
         StringBuilder sb = new StringBuilder();
-        int curryOn = 1;
+        int carryOn = 1;
         for (int i = binaryStr.length() - 1; i >= 0; i--) {
             int currentBit = binaryStr.charAt(i) - '0';
-            int sum = currentBit + curryOn;
+            int sum = currentBit + carryOn;
             if (sum == 2) {
                 sb.append(0);
-                curryOn = 1;
+                carryOn = 1;
             } else {
                 sb.append(sum);
-                curryOn = 0;
+                carryOn = 0;
             }
         }
-        if (curryOn == 1) {
+        if (carryOn == 1) {
             sb.append(1);
         }
         return sb.reverse().toString();
