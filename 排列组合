@@ -52,3 +52,27 @@
             }
         }
     }
+
+
+
+
+/**
+     * 组合问题
+     * @param shu  数组
+     * @param targ 个数
+     * @param has  当前拥有的数量
+     * @param cur  起始前部
+     */
+    public static void f1(int[] shu, int targ, int has,int cur) {
+        if(has == targ) {
+            System.out.println(stack);
+            return;
+        }
+        for(int i=cur;i<shu.length;i++) {
+            if(!stack.contains(shu[i])) {
+                stack.add(shu[i]);
+                f1(shu, targ, has+ 1,i);
+                stack.pop();
+            }
+        }
+    }
