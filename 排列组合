@@ -1,4 +1,6 @@
- public ArrayList<ArrayList<Integer>> permute (int[] num) {
+没有重复数据
+
+public ArrayList<ArrayList<Integer>> permute (int[] num) {
 
         ArrayList<ArrayList<Integer>>  list=new ArrayList<>();
         f(num, num.length, 0, list);
@@ -76,3 +78,7 @@
             }
         }
     }
+
+
+
+//有重复数据
