@@ -1,0 +1,90 @@
+package org.example;
+
+import java.util.*;
+
+public class BFSSearch {
+
+    public static void main(String[] args) {
+        BFSGraph graph = new BFSGraph();
+        graph.addVertex("A");
+        graph.addVertex("B");
+        graph.addVertex("C");
+        graph.addVertex("D");
+        graph.addVertex("E");
+        graph.addVertex("F");
+        graph.addVertex("G");
+
+        graph.addEdge(new BFSGraph.BFSEdge("A", "B"));
+        graph.addEdge(new BFSGraph.BFSEdge("A", "C"));
+        graph.addEdge(new BFSGraph.BFSEdge("B", "D"));
+        graph.addEdge(new BFSGraph.BFSEdge("B", "E"));
+        graph.addEdge(new BFSGraph.BFSEdge("C", "F"));
+        graph.addEdge(new BFSGraph.BFSEdge("E", "F"));
+        graph.addEdge(new BFSGraph.BFSEdge("E", "G"));
+        graph.addEdge(new BFSGraph.BFSEdge("F", "G"));
+
+        System.out.println("BFS starting from vertex A:");
+        graph.bfsSearch("A");
+    }
+}
+
+class BFSGraph {
+
+    private Map<String, List<BFSEdge>> adjVertices = new HashMap<>();
+
+    void addVertex(String label) {
+        adjVertices.putIfAbsent(label, new ArrayList<>());
+    }
+
+    void addEdge(BFSEdge edge) {
+        adjVertices.get(edge.getFrom()).add(edge);
+        adjVertices.get(edge.getTo()).add(new BFSEdge(edge.getTo(), edge.getFrom()));
+    }
+
+    Set<String> getVertices() {
+        return adjVertices.keySet();
+    }
+
+    List<BFSEdge> getEdges(String label) {
+        return adjVertices.get(label);
+    }
+
+    void bfsSearch(String start) {
+        Set<String> visited = new HashSet<>();
+        Queue<String> list = new LinkedList<>();
+        list.add(start);
+        while (!list.isEmpty()) {
+            String vertex = list.poll();
+            if (!visited.contains(vertex)) {
+                visited.add(vertex);
+                System.out.print(vertex + " ");
+                List<BFSEdge> edgeList = adjVertices.get(vertex);
+                if (edgeList != null) {
+                    for (BFSEdge edge : edgeList) {
+                        if (!visited.contains(edge.getTo())) {
+                            list.add(edge.getTo());
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    static class BFSEdge {
+        private String from;
+        private String to;
+
+        public BFSEdge(String from, String to) {
+            this.from = from;
+            this.to = to;
+        }
+
+        public String getFrom() {
+            return from;
+        }
+
+        public String getTo() {
+            return to;
+        }
+    }
+}
