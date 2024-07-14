@@ -271,7 +271,30 @@ public class BSearchTree{
     }
 
 
+   /**
+     * 利用中序二叉树使二叉树左右翻转
+     * @param pRoot
+     * @return
+     */
+    public Node Mirror(Node pRoot) {
+        if(pRoot!=null){
+         Mirror(pRoot.getLeft());
+         Mirror(pRoot.getRight());
+         tranfer(pRoot);
+        }
+        return  pRoot;
+    }
 
+    public Node  tranfer(Node proot){
+        if(proot==null){
+            return null;
+        }
+        Node temp;
+        temp=proot.getLeft();
+        proot.setLeft(proot.getRight());
+        proot.setRight(temp);
+        return proot;
+    }
 }
 
 /**
