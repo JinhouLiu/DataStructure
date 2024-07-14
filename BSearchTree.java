@@ -228,6 +228,48 @@ public class BSearchTree{
         return root;
     }
 
+  /**
+     * 求树的最大深度利用堆栈实现
+     * @param root
+     * @return
+     */
+   public int maxDepth(Node root){
+    if(root==null){
+        return 0;
+    }
+    if(root.getLeft()==null||root.getRight()==null){
+        return 1;
+    }
+    int maxDepth=1;
+    Stack<Pair<Node,Integer>> stack=new Stack<>();
+    stack.push(new Pair<>(root,1));
+    while (!stack.isEmpty()){
+        Pair<Node,Integer>  pair= stack.pop();
+        int depth=pair.getValue();
+        Node  current=pair.getKey();
+        if(current!=null) {
+            maxDepth = Math.max(maxDepth, depth);
+            stack.push(new Pair<>(current.getLeft(),depth+1));
+            stack.push(new Pair<>(current.getRight(),depth+1));
+        }
+    }
+    return  maxDepth;
+   }
+
+    /**
+     * 利用动态规划查找树的深度
+     * @param root
+     * @return
+     */
+    public int maxDepth2(Node root){
+     if(root==null){
+         return 0;
+     }
+     int left=maxDepth2(root.getLeft());
+     int right=maxDepth2(root.getRight());
+     return left>right?left+1:right+1;
+    }
+
 
 
 }
@@ -269,5 +311,22 @@ class Node{
 
     public void setRight(Node right) {
         this.right = right;
+    }
+}
+class Pair<K, V> {
+    private K key;
+    private V value;
+
+    public Pair(K key, V value) {
+        this.key = key;
+        this.value = value;
+    }
+
+    public K getKey() {
+        return key;
+    }
+
+    public V getValue() {
+        return value;
     }
 }
